@@ -9,11 +9,54 @@
 import UIKit
 
 class RouletteViewController: UIViewController {
+    //接收方
+    var receiveData: String!
 
+    
+    @IBOutlet weak var showDetail: UILabel!
+    
+    @IBOutlet weak var plate: UIImageView!
+
+    @IBOutlet weak var tt: UILabel!
+    
+    
+    
+    @IBAction func quit(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    
+//    public static func ball()->Int{
+//        
+//        var point : Int
+//        point = Int(arc4random()%37)
+//        return point
+//    }
+//        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+      
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        let animation = CABasicAnimation(keyPath: "transform.rotation.z")
+        animation.fromValue = 0
+        animation.toValue = 2*M_PI
+        animation.duration = 2
+        animation.repeatCount = 8
+        self.plate.layer .add(animation, forKey: nil)
+        
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64(1 * NSEC_PER_SEC))/Double(NSEC_PER_SEC) , execute: {
+            print("delay print")
+            AlertDialog.winGame(self)
+            self.tt.text = self.receiveData
+           
+            
+        })
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
